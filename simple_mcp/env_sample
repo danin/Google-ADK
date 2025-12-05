@@ -1,0 +1,3 @@
+GOOGLE_API_KEY="AIzaSyCcH_2Pks-2ibzAMje3fVF2ZW0dOOEao_8"
+GOOGLE_GENAI_USE_VERTEXAI=FALSE #instructs the Google Gen AI SDK to use the Gemini Developer API endpoints instead of the Vertex AI API endpoints.
+GOOGLE_MAPS_API_KEY="AIzaSyDpGIDC8kc9l5-3AfVKuiODMS1ro8yKWck"
