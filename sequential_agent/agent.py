@@ -3,6 +3,28 @@ from dotenv import load_dotenv
 load_dotenv()
 from google.adk.agents import Agent, SequentialAgent
 from google.adk.tools import google_search
+from typing import Optional
+from google.genai import types
+from google.adk.agents.callback_context import CallbackContext
+
+
+
+
+
+
+
+def log_input(callback_context: CallbackContext) -> Optional[types.Content]:
+    # Access the initial user content (if present)
+    user_content = callback_context.user_content
+    if user_content and user_content.parts:
+        first_part = user_content.parts[0]
+        text = getattr(first_part, "text", None)
+    else:
+        text = None
+
+    print("User content text:", text)
+    print("Current state:", callback_context.state)
+    return None
 
 
 # Recipe Research Agent - Finds ingredients and cooking methods
@@ -19,6 +41,7 @@ recipe_research_agent = Agent(
     Provide a summary that will help create a complete recipe.
     """,
     output_key="recipe_research",
+    before_agent_callback=log_input,  # logs input
 )
 
 # Recipe Creator Agent - Creates the final recipe
@@ -65,3 +88,4 @@ root_agent = SequentialAgent(
     description="A simple system that researches, creates, and enhances recipes",
     sub_agents=[recipe_research_agent, recipe_creator_agent, recipe_enhancement_agent],
 )
+
